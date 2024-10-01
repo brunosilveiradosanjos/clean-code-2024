@@ -9,8 +9,8 @@ describe('Place Order Use Case ', () => {
       cpf: '778.278.412-36',
       items: [
         { description: 'Guitar', price: 10000, quantity: 1 },
-        { description: 'Amplificator', price: 5000, quantity: 1 },
-        { description: 'Cabo', price: 50, quantity: 2 },
+        { description: 'Amplifier', price: 5000, quantity: 1 },
+        { description: 'Cable', price: 50, quantity: 2 },
       ],
       coupon: '10OFF',
     })
@@ -24,8 +24,8 @@ describe('Place Order Use Case ', () => {
       cpf: '778.278.412-36',
       items: [
         { description: 'Guitar', price: 10000, quantity: 1 },
-        { description: 'Amplificator', price: 5000, quantity: 1 },
-        { description: 'Cabo', price: 50, quantity: 2 },
+        { description: 'Amplifier', price: 5000, quantity: 1 },
+        { description: 'Cable', price: 50, quantity: 2 },
       ],
       coupon: '20OFF',
     })
