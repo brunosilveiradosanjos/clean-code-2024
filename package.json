@@ -10,7 +10,8 @@
     "build": "tsup src",
     "start": "node dist/cpf/main.js",
     "dev": "tsx watch src/server.ts",
-    "test": "vitest run src"
+    "test": "vitest run src",
+    "test:ui": "vitest --ui"
   },
   "keywords": [],
   "author": "",

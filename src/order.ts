@@ -1,6 +1,6 @@
-import Coupon from './coupon'
-import Cpf from './cpf'
-import OrderItem from './orderItem'
+import Coupon from './Coupon'
+import Cpf from './Cpf'
+import OrderItem from './OrderItem'
 
 export default class Order {
   public cpf: Cpf
@@ -16,7 +16,9 @@ export default class Order {
   }
 
   addCoupon(coupon: Coupon) {
-    this.coupon = coupon
+    if (!coupon.isExpired()) {
+      this.coupon = coupon
+    }
   }
 
   getTotal(): number {
