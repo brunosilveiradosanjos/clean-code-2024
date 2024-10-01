@@ -1,4 +1,4 @@
-import { validate } from './validate_cpf'
+import { validate } from '@/cpf'
 
 console.log(validate('00000000000')) // false
 console.log(validate('86446422799')) // false
