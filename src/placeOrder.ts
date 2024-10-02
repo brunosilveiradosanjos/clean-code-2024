@@ -1,30 +1,29 @@
-import Coupon from './Coupon'
+import CouponRepository from './CouponRepository'
 import FreightCalculator from './FreightCalculator'
-import Item from './Item'
+import ItemRepository from './ItemRepository'
 import Order from './Order'
 import OrderItem from './OrderItem'
+import OrderRepository from './OrderRepository'
 import PlaceOrderInput from './PlaceOrderInput'
 import PlaceOrderOutput from './PlaceOrderOutput'
-import ZipcodeCalculatorAPIMemory from './ZipcodeCalculatorAPIMemory'
+import ZipcodeCalculatorAPI from './ZipcodeCalculatorAPI'
 
 export default class PlaceOrder {
-  public orders: Array<Order>
-  public coupons: Array<Coupon>
-  public items: Array<Item>
-  public zipcodeCalculator: ZipcodeCalculatorAPIMemory
+  public itemRepository: ItemRepository
+  public couponRepository: CouponRepository
+  public orderRepository: OrderRepository
+  public zipcodeCalculator: ZipcodeCalculatorAPI
 
-  constructor() {
-    this.coupons = [
-      new Coupon('10OFF', 10, new Date('2041-01-01')),
-      new Coupon('20OFF', 20, new Date('2001-01-01')),
-    ]
-    this.orders = []
-    this.items = [
-      new Item('1', 'Guitar', 10000, 100, 50, 15, 3),
-      new Item('2', 'Amplifier', 5000, 50, 50, 50, 22),
-      new Item('3', 'Cable', 50, 30, 10, 10, 1),
-    ]
-    this.zipcodeCalculator = new ZipcodeCalculatorAPIMemory()
+  constructor(
+    itemRepository: ItemRepository,
+    couponRepository: CouponRepository,
+    orderRepository: OrderRepository,
+    zipcodeCalculator: ZipcodeCalculatorAPI,
+  ) {
+    this.itemRepository = itemRepository
+    this.couponRepository = couponRepository
+    this.orderRepository = orderRepository
+    this.zipcodeCalculator = zipcodeCalculator
   }
 
   execute(input: PlaceOrderInput): PlaceOrderOutput {
@@ -34,7 +33,7 @@ export default class PlaceOrder {
       '99.999-99',
     )
     input.items.map((orderItem: OrderItem) => {
-      const item = this.items.find((item) => item.id === orderItem.id)
+      const item = this.itemRepository.getById(orderItem.id)
       if (!item) throw new Error('Item not found')
       order.addItem(orderItem.id, orderItem.price, orderItem.quantity)
       order.freight +=
@@ -42,13 +41,11 @@ export default class PlaceOrder {
       return order
     })
     if (input.coupon) {
-      const coupon = this.coupons.find(
-        (coupon) => coupon.description === input.coupon,
-      )
+      const coupon = this.couponRepository.getByCode(input.coupon)
       if (coupon) order.addCoupon(coupon)
     }
     const total = order.getTotal()
-    this.orders.push(order)
+    this.orderRepository.save(order)
     return new PlaceOrderOutput({ freight: order.freight, total })
   }
 }

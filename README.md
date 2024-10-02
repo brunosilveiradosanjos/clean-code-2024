@@ -5,12 +5,15 @@ Part 1
 Scenario
 
 We will implement an online sales system with the ability to place orders with multiple items, each with a variable quantity. The system will calculate shipping costs, taxes, apply discount coupons, and interact with inventory. Additionally, we will have payment and order cancellation processes.
+---
 
 Tests
 1 - Should not place an order with an invalid CPF (Brazilian individual taxpayer registry identification)
-2 - Should place an order with 3 items (including description, price, and quantity)
-3 - Should place an order with a discount coupon (percentage off the total order)
 
+2 - Should place an order with 3 items (including description, price, and quantity)
+
+3 - Should place an order with a discount coupon (percentage off the total order)
+---
 Consider
 
 Refactor the CPF validation algorithm we saw in class
@@ -30,9 +33,11 @@ Part 2
 Tests
 
 1 - Should not apply an expired discount coupon
-2 - Should calculate the shipping cost based on distance (analyzing origin and destination ZIP codes), dimensions (height, width, and depth in cm), and product weight (in kg)
-3 - Should return the minimum shipping price if it's higher than the calculated value
 
+2 - Should calculate the shipping cost based on distance (analyzing origin and destination ZIP codes), dimensions (height, width, and depth in cm), and product weight (in kg)
+
+3 - Should return the minimum shipping price if it's higher than the calculated value
+---
 Consider
 
 The distance between two ZIP codes should be resolved by an external API
@@ -45,7 +50,7 @@ Create an in-memory implementation for the API that always returns a fixed value
 Shipping Cost Calculation Formula
 
 Shipping Price = distance (km) * volume (m3) * (density/100)
-
+---
 Examples of occupied volume (cubic measurement)
 
 Camera: 20cm x 15cm x 10cm = 0.003 m3
@@ -74,3 +79,4 @@ distance: 1000
 volume: 1
 density: 40
 price: R$400.00 (1000 * 1 * (40/100))
+---

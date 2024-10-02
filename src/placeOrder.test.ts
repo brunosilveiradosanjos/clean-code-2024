@@ -1,9 +1,32 @@
-import { expect, describe, it } from 'vitest'
+import { expect, describe, it, beforeEach } from 'vitest'
 import PlaceOrder from './PlaceOrder'
 import PlaceOrderInput from './PlaceOrderInput'
 import PlaceOrderOutput from './PlaceOrderOutput'
+import ItemRepositoryMemory from './ItemRepositoryMemory'
+import CouponRepositoryMemory from './CouponRepositoryMemory'
+import OrderRepositoryMemory from './OrderRepositoryMemory'
+import ZipcodeCalculatorAPIMemory from './ZipcodeCalculatorAPIMemory'
+
+let itemRepository: ItemRepositoryMemory
+let couponRepository: CouponRepositoryMemory
+let orderRepository: OrderRepositoryMemory
+let zipcodeCalculator: ZipcodeCalculatorAPIMemory
+let placeOrder: PlaceOrder // system under test
 
 describe('Place Order Use Case ', () => {
+  beforeEach(() => {
+    itemRepository = new ItemRepositoryMemory()
+    couponRepository = new CouponRepositoryMemory()
+    orderRepository = new OrderRepositoryMemory()
+    zipcodeCalculator = new ZipcodeCalculatorAPIMemory()
+    placeOrder = new PlaceOrder(
+      itemRepository,
+      couponRepository,
+      orderRepository,
+      zipcodeCalculator,
+    )
+  })
+
   it('Should place order ', () => {
     const placeOrderInput = new PlaceOrderInput({
       cpf: '778.278.412-36',
@@ -15,7 +38,6 @@ describe('Place Order Use Case ', () => {
       ],
       coupon: '10OFF',
     })
-    const placeOrder = new PlaceOrder()
     const output = new PlaceOrderOutput(placeOrder.execute(placeOrderInput))
     expect(output.total).toBe(13590 + 270)
   })
@@ -31,7 +53,6 @@ describe('Place Order Use Case ', () => {
       ],
       coupon: '20OFF',
     })
-    const placeOrder = new PlaceOrder()
     const output = new PlaceOrderOutput(placeOrder.execute(placeOrderInput))
     expect(output.total).toBe(15100 + 270)
   })
@@ -47,7 +68,6 @@ describe('Place Order Use Case ', () => {
       ],
       coupon: '20OFF',
     })
-    const placeOrder = new PlaceOrder()
     const output = new PlaceOrderOutput(placeOrder.execute(placeOrderInput))
     expect(output.freight).toBe(270)
   })

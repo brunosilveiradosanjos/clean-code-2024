@@ -1,14 +1,10 @@
 export default class Coupon {
-  public description: string
+  public code: string
   public discountPercentage: number
   public expiration: Date
 
-  constructor(
-    description: string,
-    discountPercentage: number,
-    expiration: Date,
-  ) {
-    this.description = description
+  constructor(code: string, discountPercentage: number, expiration: Date) {
+    this.code = code
     this.discountPercentage = discountPercentage
     this.expiration = expiration
   }
