@@ -1,11 +1,11 @@
 import { expect, describe, it, beforeEach } from 'vitest'
-import PlaceOrder from './PlaceOrder'
-import PlaceOrderInput from './PlaceOrderInput'
-import PlaceOrderOutput from './PlaceOrderOutput'
-import ItemRepositoryMemory from './ItemRepositoryMemory'
-import CouponRepositoryMemory from './CouponRepositoryMemory'
-import OrderRepositoryMemory from './OrderRepositoryMemory'
-import ZipcodeCalculatorAPIMemory from './ZipcodeCalculatorAPIMemory'
+import ZipcodeCalculatorAPIMemory from '@/infra/gateway/memory/ZipcodeCalculatorAPIMemory'
+import CouponRepositoryMemory from '@/infra/repository/memory/CouponRepositoryMemory'
+import ItemRepositoryMemory from '@/infra/repository/memory/ItemRepositoryMemory'
+import OrderRepositoryMemory from '@/infra/repository/memory/OrderRepositoryMemory'
+import PlaceOrder from '@/application/PlaceOrder'
+import PlaceOrderInput from '@/application/PlaceOrderInput'
+import PlaceOrderOutput from '@/application/PlaceOrderOutput'
 
 let itemRepository: ItemRepositoryMemory
 let couponRepository: CouponRepositoryMemory

@@ -10,7 +10,7 @@
     "build": "tsup src",
     "start": "node dist/cpf/main.js",
     "dev": "tsx watch src/server.ts",
-    "test": "vitest run src",
+    "test": "vitest run --dir test",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
   },
@@ -26,7 +26,6 @@
     "tsup": "8.3.0",
     "tsx": "4.19.1",
     "typescript": "5.6.2",
-    "vite-tsconfig-paths": "5.0.1",
     "vitest": "2.1.1"
   }
 }

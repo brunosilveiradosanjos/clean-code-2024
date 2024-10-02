@@ -1,5 +1,5 @@
+import Coupon from '@/domain/entity/Coupon'
 import { describe, expect, it } from 'vitest'
-import Coupon from './Coupon'
 
 describe('Order Entity ', () => {
   it('Should verify if coupon is expired ', () => {

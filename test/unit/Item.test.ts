@@ -1,5 +1,5 @@
+import Item from '@/domain/entity/Item'
 import { describe, expect, it } from 'vitest'
-import Item from './Item'
 
 describe('Item Entity ', () => {
   it('Should calculate the item volume ', () => {

@@ -1,6 +1,6 @@
+import Coupon from '@/domain/entity/Coupon'
+import Order from '@/domain/entity/Order'
 import { expect, describe, it } from 'vitest'
-import Coupon from './Coupon'
-import Order from './Order'
 
 describe('Order Entity ', () => {
   it('Should not place order with invalid CPF ', () => {

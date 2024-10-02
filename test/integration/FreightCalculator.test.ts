@@ -1,6 +1,6 @@
+import FreightCalculator from '@/domain/service/FreightCalculator'
+import Item from '@/domain/entity/Item'
 import { describe, expect, it } from 'vitest'
-import Item from './Item'
-import FreightCalculator from './FreightCalculator'
 
 describe('Freight Domain Service ', () => {
   it('Should calculate the guitar shipping price ', () => {

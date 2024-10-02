@@ -1,5 +1,5 @@
+import ZipcodeCalculatorAPIMemory from '@/infra/gateway/memory/ZipcodeCalculatorAPIMemory'
 import { describe, expect, it } from 'vitest'
-import ZipcodeCalculatorAPIMemory from './ZipcodeCalculatorAPIMemory'
 
 describe('Zipcode Infrastructure Service ', () => {
   it('Should calculate distance between two zipcodes ', () => {

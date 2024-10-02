@@ -1,4 +1,4 @@
-import Item from './Item'
+import Item from '@/domain/entity/Item'
 
 export default class FreightCalculator {
   static calculate(distance: number, item: Item) {

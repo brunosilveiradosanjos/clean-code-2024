@@ -1,12 +1,12 @@
-import CouponRepository from './CouponRepository'
-import FreightCalculator from './FreightCalculator'
-import ItemRepository from './ItemRepository'
-import Order from './Order'
-import OrderItem from './OrderItem'
-import OrderRepository from './OrderRepository'
-import PlaceOrderInput from './PlaceOrderInput'
-import PlaceOrderOutput from './PlaceOrderOutput'
-import ZipcodeCalculatorAPI from './ZipcodeCalculatorAPI'
+import Order from '@/domain/entity/Order'
+import OrderItem from '@/domain/entity/OrderItem'
+import ZipcodeCalculatorAPI from '@/domain/gateway/ZipcodeCalculatorAPI'
+import CouponRepository from '@/domain/repository/CouponRepository'
+import ItemRepository from '@/domain/repository/ItemRepository'
+import OrderRepository from '@/domain/repository/OrderRepository'
+import FreightCalculator from '@/domain/service/FreightCalculator'
+import PlaceOrderInput from '@/application/PlaceOrderInput'
+import PlaceOrderOutput from '@/application/PlaceOrderOutput'
 
 export default class PlaceOrder {
   public itemRepository: ItemRepository
