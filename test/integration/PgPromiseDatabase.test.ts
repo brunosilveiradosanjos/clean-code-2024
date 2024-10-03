@@ -5,7 +5,7 @@ describe('Postgres Database implementation ', () => {
   let pgPromiseDatabase: PgPromiseDatabase
 
   beforeAll(() => {
-    pgPromiseDatabase = new PgPromiseDatabase()
+    pgPromiseDatabase = PgPromiseDatabase.getInstance()
   })
 
   it('Should establish a connection to the database and list the items', async () => {

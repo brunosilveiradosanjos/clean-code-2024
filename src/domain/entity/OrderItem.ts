@@ -10,6 +10,6 @@ export default class OrderItem {
   }
 
   getTotal(): number {
-    return this.price * this.quantity
+    return (this.price as number) * (this.quantity as number)
   }
 }

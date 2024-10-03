@@ -5,7 +5,7 @@ export default class Item {
   public width: number
   public height: number
   public length: number
-  public weigth: number
+  public weight: number
   constructor(
     id: string,
     description: string,
@@ -13,7 +13,7 @@ export default class Item {
     width: number,
     height: number,
     length: number,
-    weigth: number,
+    weight: number,
   ) {
     this.id = id
     this.description = description
@@ -21,7 +21,7 @@ export default class Item {
     this.width = width
     this.height = height
     this.length = length
-    this.weigth = weigth
+    this.weight = weight
   }
 
   getVolume(): number {
@@ -29,6 +29,6 @@ export default class Item {
   }
 
   getDensity(): number {
-    return this.weigth / this.getVolume()
+    return this.weight / this.getVolume()
   }
 }

@@ -79,4 +79,37 @@ distance: 1000
 volume: 1
 density: 40
 price: R$400.00 (1000 * 1 * (40/100))
+
 ---
+Part 3
+---
+Tests
+
+1 - Should generate the order code
+2 - Should obtain the order information
+
+Consider
+
+The order code is formed by YYYYNNNNNNNN where YYYY represents the year and NNNNNNNN represents a sequential order number
+Implement an in-memory repository for each aggregate (Order, Item, and Coupon)
+The information that should be displayed includes the code, the CPF (Brazilian individual taxpayer registry) of the person who placed the order, the delivery ZIP code, as well as the items along with their price and quantity, plus the discount amount, shipping cost, and the total
+
+Important
+
+Implement the missing unit tests for each of the entities
+Implement the DTOs for each of the use cases
+
+---
+Part 4
+---
+Tests
+
+1 - Calculate the taxes
+2 - Calculate the total taxes for the order
+
+Consider
+
+Implement the other repositories in the database
+Organize the application folders
+Musical instruments have a 15% tax, accessories have a 5% tax, books have a 0% tax
+Only in November, taxes decrease to 5% for musical instruments, 1% for accessories, and 0% for books

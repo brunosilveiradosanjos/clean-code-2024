@@ -4,7 +4,8 @@ import Database from '@/infra/database/Database'
 
 export default class ItemRepositoryDatabase implements ItemRepository {
   database: Database
-
+  // eslint-disable-next-line no-use-before-define
+  static instance: ItemRepositoryDatabase
   constructor(database: Database) {
     this.database = database
   }
@@ -21,7 +22,7 @@ export default class ItemRepositoryDatabase implements ItemRepository {
       itemData.width,
       itemData.height,
       itemData.length,
-      itemData.weigth,
+      itemData.weight,
     )
   }
 }
