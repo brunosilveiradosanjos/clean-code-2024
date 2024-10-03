@@ -23,9 +23,13 @@ export default class Order {
   }
 
   getTotal(): number {
-    let total = this.items
-      .map((item) => item.getTotal())
-      .reduce((previous, current) => previous + current)
+    let total = 0
+    for (const orderItem of this.items) {
+      total += orderItem.getTotal()
+    }
+    // total = this.items
+    //   .map((item) => item.getTotal())
+    //   .reduce((previous, current) => previous + current)
     if (this.coupon) {
       total = total - (total * this.coupon.discountPercentage) / 100
     }

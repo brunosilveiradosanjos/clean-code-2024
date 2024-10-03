@@ -5,7 +5,6 @@ import ItemRepositoryMemory from '@/infra/repository/memory/ItemRepositoryMemory
 import OrderRepositoryMemory from '@/infra/repository/memory/OrderRepositoryMemory'
 import PlaceOrder from '@/application/PlaceOrder'
 import PlaceOrderInput from '@/application/PlaceOrderInput'
-import PlaceOrderOutput from '@/application/PlaceOrderOutput'
 
 let itemRepository: ItemRepositoryMemory
 let couponRepository: CouponRepositoryMemory
@@ -27,7 +26,7 @@ describe('Place Order Use Case ', () => {
     )
   })
 
-  it('Should place order ', () => {
+  it('Should place order ', async () => {
     const placeOrderInput = new PlaceOrderInput({
       cpf: '778.278.412-36',
       zipcode: '11.111-11',
@@ -38,11 +37,11 @@ describe('Place Order Use Case ', () => {
       ],
       coupon: '10OFF',
     })
-    const output = new PlaceOrderOutput(placeOrder.execute(placeOrderInput))
+    const output = await placeOrder.execute(placeOrderInput)
     expect(output.total).toBe(13590 + 270)
   })
 
-  it('Should place order with expired coupon ', () => {
+  it('Should place order with expired coupon ', async () => {
     const placeOrderInput = new PlaceOrderInput({
       cpf: '778.278.412-36',
       zipcode: '11.111-11',
@@ -53,11 +52,11 @@ describe('Place Order Use Case ', () => {
       ],
       coupon: '20OFF',
     })
-    const output = new PlaceOrderOutput(placeOrder.execute(placeOrderInput))
+    const output = await placeOrder.execute(placeOrderInput)
     expect(output.total).toBe(15100 + 270)
   })
 
-  it('Should calculate shipping price ', () => {
+  it('Should calculate shipping price ', async () => {
     const placeOrderInput = new PlaceOrderInput({
       cpf: '778.278.412-36',
       zipcode: '11.111-11',
@@ -68,7 +67,7 @@ describe('Place Order Use Case ', () => {
       ],
       coupon: '20OFF',
     })
-    const output = new PlaceOrderOutput(placeOrder.execute(placeOrderInput))
+    const output = await placeOrder.execute(placeOrderInput)
     expect(output.freight).toBe(270)
   })
 })
