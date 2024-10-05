@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build": "tsup src",
-    "start": "node dist/cpf/main.js",
-    "dev": "tsx watch src/server.ts",
+    "main:dev": "tsx watch ./src/main",
+    "main:prod": "tsup src && node ./dist/main",
     "test": "vitest run --dir test",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
@@ -29,6 +29,11 @@
     "vitest": "2.1.1"
   },
   "dependencies": {
-    "pg-promise": "11.9.1"
+    "@types/express": "5.0.0",
+    "axios": "1.7.7",
+    "express": "4.21.0",
+    "fastify": "5.0.0",
+    "pg-promise": "11.9.1",
+    "save": "2.9.0"
   }
 }
