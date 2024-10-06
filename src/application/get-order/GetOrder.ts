@@ -1,8 +1,8 @@
 import CouponRepository from '@/domain/repository/CouponRepository'
 import ItemRepository from '@/domain/repository/ItemRepository'
 import OrderRepository from '@/domain/repository/OrderRepository'
-import GetOrderOutput from './GetOrderOutput'
 import RepositoryFactory from '@/domain/factory/RepositoryFactory'
+import GetOrderOutput from './GetOrderOutput'
 
 export default class GetOrder {
   itemRepository: ItemRepository

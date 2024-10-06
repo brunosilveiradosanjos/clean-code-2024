@@ -1,6 +1,8 @@
-import GetOrder from '@/application/GetOrder'
+import GetOrder from '@/application/get-order/GetOrder'
 import Http from './Http'
 import RepositoryFactory from '@/domain/factory/RepositoryFactory'
+import ZipcodeCalculatorAPIMemory from '../gateway/memory/ZipcodeCalculatorAPIMemory'
+import PlaceOrder from '@/application/place-order/PlaceOrder'
 
 export default class RoutesConfig {
   private http: Http
@@ -16,6 +18,16 @@ export default class RoutesConfig {
     this.http.on('get', '/orders/${code}', async (params: any, body: any) => {
       const getOrder = new GetOrder(this.repositoryFactory)
       const order = await getOrder.execute(params.code)
+      return order
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.http.on('post', '/orders', async (params: any, body: any) => {
+      const placeOrder = new PlaceOrder(
+        this.repositoryFactory,
+        new ZipcodeCalculatorAPIMemory(),
+      )
+      const order = await placeOrder.execute(body)
       return order
     })
   }

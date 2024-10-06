@@ -1,14 +1,13 @@
 import { expect, describe, it, beforeEach } from 'vitest'
+import PlaceOrderInput from '@/application/place-order/PlaceOrderInput'
+import PlaceOrder from '@/application/place-order/PlaceOrder'
+import RepositoryFactory from '@/domain/factory/RepositoryFactory'
+import ZipcodeCalculatorAPI from '@/domain/gateway/ZipcodeCalculatorAPI'
 import ZipcodeCalculatorAPIMemory from '@/infra/gateway/memory/ZipcodeCalculatorAPIMemory'
-import PlaceOrder from '@/application/PlaceOrder'
-import PlaceOrderInput from '@/application/PlaceOrderInput'
-import MemoryRepositoryFactory from '@/infra/factory/MemoryRepositoryRepository'
-import OrderRepositoryMemory from '@/infra/repository/memory/OrderRepositoryMemory'
-import { afterEach } from 'node:test'
+import DatabaseRepositoryFactory from '@/infra/factory/DatabaseRepositoryFactory'
 
-let zipcodeCalculator: ZipcodeCalculatorAPIMemory
-let repositoryFactory: MemoryRepositoryFactory
-let orderRepository: OrderRepositoryMemory
+let repositoryFactory: RepositoryFactory
+let zipcodeCalculator: ZipcodeCalculatorAPI
 
 let placeOrder: PlaceOrder // system under test
 
@@ -21,14 +20,12 @@ describe('Place Order Use Case ', () => {
     { id: '3', price: 50, quantity: 2 },
   ]
 
-  beforeEach(() => {
-    zipcodeCalculator = new ZipcodeCalculatorAPIMemory()
-    repositoryFactory = new MemoryRepositoryFactory()
-    orderRepository = OrderRepositoryMemory.getInstance()
-    placeOrder = new PlaceOrder(repositoryFactory, zipcodeCalculator)
-  })
-  afterEach(async () => {
+  beforeEach(async () => {
+    repositoryFactory = new DatabaseRepositoryFactory()
+    const orderRepository = repositoryFactory.createOrderRepository()
     await orderRepository.clean()
+    zipcodeCalculator = new ZipcodeCalculatorAPIMemory()
+    placeOrder = new PlaceOrder(repositoryFactory, zipcodeCalculator)
   })
 
   it('Should place order ', async () => {
@@ -72,6 +69,6 @@ describe('Place Order Use Case ', () => {
       coupon: '20OFF',
     })
     const output = await placeOrder.execute(placeOrderInput)
-    expect(output.code).toBe('202400000004')
+    expect(output.code).toBe('202400000001')
   })
 })
