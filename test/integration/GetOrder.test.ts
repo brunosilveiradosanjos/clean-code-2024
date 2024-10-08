@@ -15,8 +15,8 @@ describe('Order Integration', () => {
     repositoryFactory = new DatabaseRepositoryFactory()
     const orderRepository = repositoryFactory.createOrderRepository()
     await orderRepository.clean()
-    // const stockEntryRepository = repositoryFactory.createStockEntryRepository()
-    // await stockEntryRepository.clean()
+    const stockEntryRepository = repositoryFactory.createStockEntryRepository()
+    await stockEntryRepository.clean()
     zipcodeCalculator = new ZipcodeCalculatorAPIMemory()
   })
 

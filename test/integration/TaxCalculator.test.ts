@@ -4,7 +4,7 @@ import TaxCalculatorFactory from '@/domain/factory/TaxCalculatorFactory'
 import { describe, expect, it } from 'vitest'
 
 describe('Tax Calculator', () => {
-  it('Should calculate the tax for a Guitar item in regular months', function () {
+  it('Should calculate the tax for a Guitar item in regular months', () => {
     const item = new Item(1, 'Guitar', 1000, 100, 50, 30, 8)
     const taxTables = [
       new TaxTable(1, 'default', 15),
@@ -16,7 +16,7 @@ describe('Tax Calculator', () => {
     expect(amount).toBe(150)
   })
 
-  it('Should calculate the tax for a Guitar item in November', function () {
+  it('Should calculate the tax for a Guitar item in November', () => {
     const item = new Item(1, 'Guitar', 1000, 100, 50, 30, 8)
     const taxTables = [
       new TaxTable(1, 'default', 15),
@@ -28,7 +28,7 @@ describe('Tax Calculator', () => {
     expect(amount).toBe(50)
   })
 
-  it('Should calculate the tax for a Cable item in regular months', function () {
+  it('Should calculate the tax for a Cable item in regular months', () => {
     const item = new Item(3, 'Cable', 30, 10, 10, 10, 1)
     const taxTables = [
       new TaxTable(3, 'default', 5),
@@ -40,7 +40,7 @@ describe('Tax Calculator', () => {
     expect(amount).toBe(1.5) // 5%
   })
 
-  it('Should calculate the tax for a Cable item in November', function () {
+  it('Should calculate the tax for a Cable item in November', () => {
     const item = new Item(3, 'Cabo', 30, 10, 10, 10, 1)
     const taxTables = [
       new TaxTable(3, 'default', 5),

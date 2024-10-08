@@ -34,7 +34,7 @@ describe('Order Entity ', () => {
     expect(order.getTotal()).toBe(15100)
   })
 
-  it('Should create order code', function () {
+  it('Should create order code', () => {
     const order = new Order(cpf, new Date('2020-10-10'), 2)
     order.addItem(1, 1000, 2)
     order.addItem(2, 5000, 1)

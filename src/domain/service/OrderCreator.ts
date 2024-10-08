@@ -9,6 +9,9 @@ import ZipcodeCalculatorAPI from '@/domain/gateway/ZipcodeCalculatorAPI'
 import TaxCalculatorFactory from '@/domain/factory/TaxCalculatorFactory'
 import PlaceOrderInput from '@/application/place-order/PlaceOrderInput'
 import FreightCalculator from './FreightCalculator'
+import StockEntryRepository from '@/domain/repository/StockEntryRepository'
+import StockEntry from '@/domain/entity/StockEntry'
+import StockCalculator from './StockCalculator'
 
 export default class OrderCreator {
   zipcodeCalculator: ZipcodeCalculatorAPIMemory
@@ -16,7 +19,7 @@ export default class OrderCreator {
   couponRepository: CouponRepository
   orderRepository: OrderRepository
   taxTableRepository: TaxTableRepository
-  //   stockEntryRepository: StockEntryRepository
+  stockEntryRepository: StockEntryRepository
 
   constructor(
     repositoryFactory: RepositoryFactory,
@@ -26,13 +29,13 @@ export default class OrderCreator {
     this.couponRepository = repositoryFactory.createCouponRepository()
     this.orderRepository = repositoryFactory.createOrderRepository()
     this.taxTableRepository = repositoryFactory.createTaxTableRepository()
-    // this.stockEntryRepository = repositoryFactory.createStockEntryRepository()
+    this.stockEntryRepository = repositoryFactory.createStockEntryRepository()
     this.zipcodeCalculator = zipcodeCalculator
   }
 
   // unit of work
-  // eventos
-  // operações de compensação padrão saga
+  // events
+  // SAGA
   async create(input: PlaceOrderInput) {
     const sequence = (await this.orderRepository.count()) + 1
     const order = new Order(input.cpf, input.issueDate, sequence)
@@ -41,7 +44,7 @@ export default class OrderCreator {
       '99.999-99',
     )
     const taxCalculator = TaxCalculatorFactory.create(input.issueDate)
-    // const stockCalculator = new StockCalculator()
+    const stockCalculator = new StockCalculator()
     for (const orderItem of input.items) {
       const item = await this.itemRepository.getById(orderItem.idItem)
       if (!item) throw new Error('Item not found')
@@ -51,12 +54,12 @@ export default class OrderCreator {
       const taxTables = await this.taxTableRepository.getByIdItem(item.id)
       const taxes = taxCalculator.calculate(item, taxTables)
       order.taxes += taxes * orderItem.quantity
-      //   const stockEntries = await this.stockEntryRepository.getByIdItem(item.id)
-      //   const quantity = stockCalculator.calculate(stockEntries)
-      //   if (quantity < orderItem.quantity) throw new Error('Out of stock')
-      //   this.stockEntryRepository.save(
-      // new StockEntry(item.id, 'out', orderItem.quantity, new Date()),
-      //   )
+      const stockEntries = await this.stockEntryRepository.getByIdItem(item.id)
+      const quantity = stockCalculator.calculate(stockEntries)
+      if (quantity < orderItem.quantity) throw new Error('Out of stock')
+      this.stockEntryRepository.save(
+        new StockEntry(item.id, 'out', orderItem.quantity, new Date()),
+      )
       // EventPublisher.publish(new OrderCreated(infos order))
     }
     if (input.coupon) {

@@ -1,24 +1,24 @@
+import { beforeEach, describe, expect, it } from 'vitest'
 import PlaceOrder from '@/application/place-order/PlaceOrder'
 import PlaceOrderInput from '@/application/place-order/PlaceOrderInput'
 import RepositoryFactory from '@/domain/factory/RepositoryFactory'
 import ZipcodeCalculatorAPI from '@/domain/gateway/ZipcodeCalculatorAPI'
 import DatabaseRepositoryFactory from '@/infra/factory/DatabaseRepositoryFactory'
 import ZipcodeCalculatorAPIMemory from '@/infra/gateway/memory/ZipcodeCalculatorAPIMemory'
-import { beforeEach, describe, expect, it } from 'vitest'
 
 let repositoryFactory: RepositoryFactory
 let zipcodeCalculator: ZipcodeCalculatorAPI
 
 describe('Place Order Integration ', () => {
-  beforeEach(async function () {
+  beforeEach(async () => {
     repositoryFactory = new DatabaseRepositoryFactory()
     const orderRepository = repositoryFactory.createOrderRepository()
     await orderRepository.clean()
-    // const stockEntryRepository = repositoryFactory.createStockEntryRepository()
-    // await stockEntryRepository.clean()
+    const stockEntryRepository = repositoryFactory.createStockEntryRepository()
+    await stockEntryRepository.clean()
     zipcodeCalculator = new ZipcodeCalculatorAPIMemory()
   })
-  it('Should place order', async function () {
+  it('Should place order', async () => {
     const input = new PlaceOrderInput({
       cpf: '778.278.412-36',
       zipcode: '11.111-11',
@@ -34,7 +34,7 @@ describe('Place Order Integration ', () => {
     expect(output.total).toBe(5982)
   })
 
-  it('Should place order with expired coupon', async function () {
+  it('Should place order with expired coupon', async () => {
     const input = new PlaceOrderInput({
       cpf: '778.278.412-36',
       zipcode: '11.111-11',
@@ -50,7 +50,7 @@ describe('Place Order Integration ', () => {
     expect(output.total).toBe(7400)
   })
 
-  it('Should calculate shipping price', async function () {
+  it('Should calculate shipping price', async () => {
     const input = new PlaceOrderInput({
       cpf: '778.278.412-36',
       zipcode: '11.111-11',
@@ -66,7 +66,7 @@ describe('Place Order Integration ', () => {
     expect(output.freight).toBe(310)
   })
 
-  it('Should calculate order code', async function () {
+  it('Should calculate order code', async () => {
     const input = new PlaceOrderInput({
       cpf: '778.278.412-36',
       zipcode: '11.111-11',
@@ -84,7 +84,7 @@ describe('Place Order Integration ', () => {
     expect(output.code).toBe('202100000002')
   })
 
-  it('Should calculate taxes', async function () {
+  it('Should calculate taxes', async () => {
     const input = new PlaceOrderInput({
       cpf: '778.278.412-36',
       zipcode: '11.111-11',
@@ -101,16 +101,16 @@ describe('Place Order Integration ', () => {
     expect(output.taxes).toBe(1054.5)
   })
 
-  // it('Não deve ser possível fazer um pedido de item sem estoque', async function () {
-  //   const input = new PlaceOrderInput({
-  //     cpf: '778.278.412-36',
-  //     zipcode: '11.111-11',
-  //     items: [{ idItem: 1, quantity: 12 }],
-  //     coupon: '20OFF',
-  //   })
-  //   const placeOrder = new PlaceOrder(repositoryFactory, zipcodeCalculator)
-  //   await expect(placeOrder.execute(input)).rejects.toThrow(
-  //     new Error('Out of stock'),
-  //   )
-  // })
+  it('Should not be possible to place an order for an item that is out of stock.', async () => {
+    const input = new PlaceOrderInput({
+      cpf: '778.278.412-36',
+      zipcode: '11.111-11',
+      items: [{ idItem: 1, quantity: 12 }],
+      coupon: '20OFF',
+    })
+    const placeOrder = new PlaceOrder(repositoryFactory, zipcodeCalculator)
+    await expect(placeOrder.execute(input)).rejects.toThrow(
+      new Error('Out of stock'),
+    )
+  })
 })
