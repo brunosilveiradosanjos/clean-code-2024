@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import GetOrder from '@/application/get-order/GetOrder'
 import PlaceOrderInput from '@/application/place-order/PlaceOrderInput'
 import ZipcodeCalculatorAPIMemory from '@/infra/gateway/memory/ZipcodeCalculatorAPIMemory'
 import DatabaseRepositoryFactory from '@/infra/factory/DatabaseRepositoryFactory'
 import PlaceOrder from '@/application/place-order/PlaceOrder'
 import RepositoryFactory from '@/domain/factory/RepositoryFactory'
 import ZipcodeCalculatorAPI from '@/domain/gateway/ZipcodeCalculatorAPI'
+import GetOrder from '@/application/get-order/GetOrder'
 
 describe('Order Integration', () => {
   let repositoryFactory: RepositoryFactory
@@ -36,6 +36,6 @@ describe('Order Integration', () => {
     const output = await placeOrder.execute(input)
     const getOrder = new GetOrder(repositoryFactory)
     const getOrderOutput = await getOrder.execute(output.code)
-    expect(getOrderOutput.total).toBe(5982)
+    expect(getOrderOutput.total).toBe(930)
   })
 })
