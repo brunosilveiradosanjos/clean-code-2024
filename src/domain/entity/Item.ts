@@ -1,13 +1,14 @@
 export default class Item {
-  public id: string
-  public description: string
-  public price: number
-  public width: number
-  public height: number
-  public length: number
-  public weight: number
+  id: number
+  description: string
+  price: number
+  width: number
+  height: number
+  length: number
+  weight: number
+
   constructor(
-    id: string,
+    id: number,
     description: string,
     price: number,
     width: number,

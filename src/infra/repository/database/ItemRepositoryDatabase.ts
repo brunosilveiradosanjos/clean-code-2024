@@ -4,25 +4,28 @@ import Database from '@/infra/database/Database'
 
 export default class ItemRepositoryDatabase implements ItemRepository {
   database: Database
-  // eslint-disable-next-line no-use-before-define
-  static instance: ItemRepositoryDatabase
+
   constructor(database: Database) {
     this.database = database
   }
 
-  async getById(id: string): Promise<Item | undefined> {
-    const itemData = await this.database.one(
-      'select * from ccca.item where id = $1',
-      [id],
-    )
-    return new Item(
-      itemData.id,
-      itemData.description,
-      itemData.price,
-      itemData.width,
-      itemData.height,
-      itemData.length,
-      itemData.weight,
-    )
+  async getById(id: number): Promise<Item | undefined> {
+    console.log('ItemRepositoryDatabase getById ', id)
+    if (id) {
+      const itemData = await this.database.one(
+        'select * from ccca.item where id = $1',
+        [id],
+      )
+      return new Item(
+        itemData.id,
+        itemData.description,
+        itemData.price,
+        itemData.width,
+        itemData.height,
+        itemData.length,
+        itemData.weight,
+      )
+    }
+    throw new Error('Item not found')
   }
 }

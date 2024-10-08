@@ -4,23 +4,27 @@ import OrderCode from './OrderCode'
 import OrderItem from './OrderItem'
 
 export default class Order {
-  public cpf: Cpf
-  public coupon: Coupon | undefined
-  public items: Array<OrderItem> = []
-  public freight: number = 0
-  public code: OrderCode
-  public sequence: number
-  public issueDate: Date
+  cpf: Cpf
+  items: OrderItem[]
+  coupon: Coupon | undefined
+  freight: number
+  taxes: number
+  code: OrderCode
+  issueDate: Date
+  sequence: number
 
   constructor(cpf: string, issueDate: Date = new Date(), sequence: number = 1) {
     this.cpf = new Cpf(cpf)
+    this.items = []
+    this.freight = 0
+    this.taxes = 0
     this.issueDate = issueDate
     this.sequence = sequence
     this.code = new OrderCode(issueDate, sequence)
   }
 
-  addItem(id: string, price: number, quantity: number): void {
-    this.items.push(new OrderItem(id, price, quantity))
+  addItem(idItem: number, price: number, quantity: number): void {
+    this.items.push(new OrderItem(idItem, price, quantity))
   }
 
   addCoupon(coupon: Coupon) {
@@ -35,7 +39,7 @@ export default class Order {
       total += orderItem.getTotal()
     }
     if (this.coupon) {
-      total = total - (total * this.coupon.discountPercentage) / 100
+      total -= (total * this.coupon.discountPercentage) / 100
     }
     total += this.freight
     return total

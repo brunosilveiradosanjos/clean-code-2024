@@ -15,9 +15,9 @@ describe('Place Order Use Case ', () => {
   const cpf = '778.278.412-36'
   const zipcode = '11.111-11'
   const items = [
-    { id: '1', price: 10000, quantity: 1 },
-    { id: '2', price: 5000, quantity: 1 },
-    { id: '3', price: 50, quantity: 2 },
+    { id: 1, price: 10000, quantity: 1 },
+    { id: 2, price: 5000, quantity: 1 },
+    { id: 3, price: 50, quantity: 2 },
   ]
 
   beforeEach(async () => {
@@ -36,7 +36,7 @@ describe('Place Order Use Case ', () => {
       coupon: '10OFF',
     })
     const output = await placeOrder.execute(placeOrderInput)
-    expect(output.total).toBe(13590 + 270)
+    expect(output.total).toBe(5724)
   })
 
   it('Should place order with expired coupon ', async () => {
@@ -47,7 +47,7 @@ describe('Place Order Use Case ', () => {
       coupon: '20OFF_EXPIRED',
     })
     const output = await placeOrder.execute(placeOrderInput)
-    expect(output.total).toBe(15100 + 270)
+    expect(output.total).toBe(6330)
   })
 
   it('Should calculate shipping price ', async () => {
@@ -70,5 +70,16 @@ describe('Place Order Use Case ', () => {
     })
     const output = await placeOrder.execute(placeOrderInput)
     expect(output.code).toBe('202400000001')
+  })
+
+  it('Should calculate taxes ', async () => {
+    const placeOrderInput = new PlaceOrderInput({
+      cpf,
+      zipcode,
+      items,
+      coupon: '20OFF',
+    })
+    const output = await placeOrder.execute(placeOrderInput)
+    expect(output.taxes).toBe(903)
   })
 })

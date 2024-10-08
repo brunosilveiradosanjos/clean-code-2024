@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export default class PlaceOrderInput {
   cpf: string
   zipcode: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: any
-  coupon: string | undefined
+  coupon: string
   issueDate: Date
 
   constructor({
@@ -15,9 +15,8 @@ export default class PlaceOrderInput {
   }: {
     cpf: string
     zipcode: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     items: any
-    coupon?: string | undefined
+    coupon: string
     issueDate?: Date
   }) {
     this.cpf = cpf

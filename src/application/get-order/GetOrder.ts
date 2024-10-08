@@ -1,7 +1,7 @@
+import RepositoryFactory from '@/domain/factory/RepositoryFactory'
 import CouponRepository from '@/domain/repository/CouponRepository'
 import ItemRepository from '@/domain/repository/ItemRepository'
 import OrderRepository from '@/domain/repository/OrderRepository'
-import RepositoryFactory from '@/domain/factory/RepositoryFactory'
 import GetOrderOutput from './GetOrderOutput'
 
 export default class GetOrder {
@@ -20,7 +20,7 @@ export default class GetOrder {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const orderItems: any[] = []
     for (const orderItem of order.items) {
-      const item = await this.itemRepository.getById(orderItem.id)
+      const item = await this.itemRepository.getById(orderItem.idItem)
       const orderItemOutput = {
         itemDescription: item?.description,
         price: orderItem.price,
@@ -31,6 +31,7 @@ export default class GetOrder {
     return new GetOrderOutput({
       code: order.code.value,
       freight: order.freight,
+      taxes: order.taxes,
       total: order.getTotal(),
       orderItems,
     })

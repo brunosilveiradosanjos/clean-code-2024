@@ -3,11 +3,17 @@ import CouponRepository from '@/domain/repository/CouponRepository'
 import ItemRepository from '@/domain/repository/ItemRepository'
 import OrderRepository from '@/domain/repository/OrderRepository'
 import PgPromiseDatabase from '@/infra/database/PgPromiseDatabase'
-import ItemRepositoryDatabase from '../repository/database/ItemRepositoryDatabase'
-import CouponRepositoryDatabase from '../repository/database/CouponRepositoryDatabase'
-import OrderRepositoryDatabase from '../repository/database/OrderRepositoryDatabase'
+import TaxTableRepository from '@/domain/repository/TaxTableRepository'
+import TaxTableRepositoryDatabase from '@/infra/repository/database/TaxTableRepositoryDatabase'
+import ItemRepositoryDatabase from '@/infra/repository/database/ItemRepositoryDatabase'
+import CouponRepositoryDatabase from '@/infra/repository/database/CouponRepositoryDatabase'
+import OrderRepositoryDatabase from '@/infra/repository/database/OrderRepositoryDatabase'
 
 export default class DatabaseRepositoryFactory implements RepositoryFactory {
+  createTaxTableRepository(): TaxTableRepository {
+    return new TaxTableRepositoryDatabase(PgPromiseDatabase.getInstance())
+  }
+
   createItemRepository(): ItemRepository {
     return new ItemRepositoryDatabase(PgPromiseDatabase.getInstance())
   }
