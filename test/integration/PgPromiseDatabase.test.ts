@@ -1,10 +1,10 @@
-import { beforeAll, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import PgPromiseDatabase from '@/infra/database/PgPromiseDatabase'
 
 describe('Postgres Database implementation ', () => {
   let pgPromiseDatabase: PgPromiseDatabase
 
-  beforeAll(() => {
+  beforeEach(() => {
     pgPromiseDatabase = PgPromiseDatabase.getInstance()
   })
 
