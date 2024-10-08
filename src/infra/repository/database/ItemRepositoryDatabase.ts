@@ -10,7 +10,6 @@ export default class ItemRepositoryDatabase implements ItemRepository {
   }
 
   async getById(id: number): Promise<Item | undefined> {
-    console.log('ItemRepositoryDatabase getById ', id)
     if (id) {
       const itemData = await this.database.one(
         'select * from ccca.item where id = $1',

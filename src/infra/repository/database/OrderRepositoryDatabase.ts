@@ -36,6 +36,7 @@ export default class OrderRepositoryDatabase implements OrderRepository {
       'select * from ccca.order where code = $1',
       [code],
     )
+    if (!orderData) throw new Error('Order not found')
     const orderItemsData = await this.database.many(
       'select * from ccca.order_item where id_order = $1',
       [orderData.id],
