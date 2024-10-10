@@ -10,7 +10,7 @@ describe('Postgres Database implementation ', () => {
 
   it('Should establish a connection to the database and list the items', async () => {
     const itens = await pgPromiseDatabase.many('select * from ccca.item', [])
-    expect(itens).toHaveLength(3)
+    expect(itens).toHaveLength(4)
   })
 
   it('Should establish a connection to the database and filter one items', async () => {

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import PlaceOrderInput from '@/application/place-order/PlaceOrderInput'
 import ZipcodeCalculatorAPIMemory from '@/infra/gateway/memory/ZipcodeCalculatorAPIMemory'
 import DatabaseRepositoryFactory from '@/infra/factory/DatabaseRepositoryFactory'
@@ -18,11 +18,6 @@ describe('Order Integration', () => {
     const stockEntryRepository = repositoryFactory.createStockEntryRepository()
     await stockEntryRepository.clean()
     zipcodeCalculator = new ZipcodeCalculatorAPIMemory()
-  })
-
-  afterEach(async () => {
-    // const orderRepository = repositoryFactory.createOrderRepository()
-    // await orderRepository.clean()
   })
 
   it('Should get order', async () => {

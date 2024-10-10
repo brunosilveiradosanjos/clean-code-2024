@@ -49,7 +49,8 @@ export default class OrderRepositoryDatabase implements OrderRepository {
     for (const orderItemData of orderItemsData) {
       order.addItem(
         orderItemData.id_item,
-        parseFloat(orderItemData.price),
+        orderItemData.price,
+        // parseFloat(orderItemData.price),
         orderItemData.quantity,
       )
     }

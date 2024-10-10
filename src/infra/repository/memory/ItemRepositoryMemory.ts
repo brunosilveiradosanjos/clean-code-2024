@@ -15,4 +15,8 @@ export default class ItemRepositoryMemory implements ItemRepository {
   getById(id: number): Promise<Item | undefined> {
     return Promise.resolve(this.items.find((item) => item.id === id))
   }
+
+  getAll(): Promise<Item[]> {
+    return Promise.resolve(this.items)
+  }
 }

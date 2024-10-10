@@ -27,4 +27,10 @@ export default class ItemRepositoryDatabase implements ItemRepository {
     }
     throw new Error('Item not found')
   }
+
+  async getAll(): Promise<Item[]> {
+    let items: Item[] = []
+    items = await this.database.many('select * from ccca.item', [])
+    return items
+  }
 }

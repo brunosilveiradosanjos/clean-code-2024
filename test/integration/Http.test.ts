@@ -1,12 +1,12 @@
-import DatabaseRepositoryFactory from '@/infra/factory/DatabaseRepositoryFactory'
+// import DatabaseRepositoryFactory from '@/infra/factory/DatabaseRepositoryFactory'
 // import axios from 'axios'
 import { afterEach, beforeEach, describe, it } from 'vitest'
 
 describe('Axios API implementation ', () => {
   beforeEach(async () => {
-    const repositoryFactory = new DatabaseRepositoryFactory()
-    const orderRepository = repositoryFactory.createOrderRepository()
-    await orderRepository.clean()
+    // const repositoryFactory = new DatabaseRepositoryFactory()
+    // const orderRepository = repositoryFactory.createOrderRepository()
+    // await orderRepository.clean()
   })
 
   afterEach(async () => {
