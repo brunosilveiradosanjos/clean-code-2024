@@ -23,7 +23,7 @@ export default class RoutesConfig {
     })
 
     // eslint-disable-next-line no-template-curly-in-string, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-    this.http.on('get', '/orders', async (params: any, body: any) => {
+    this.http.on('get', '/items', async (params: any, body: any) => {
       const getItems = new GetItems(this.repositoryFactory)
       const orders = await getItems.execute()
       return orders
