@@ -1,0 +1,12 @@
+name: Deploy Clean Code Clean Architecture eComerce
+
+on:
+    push:
+        branches: [development]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checout code
+              uses: actions/checkout@v3
