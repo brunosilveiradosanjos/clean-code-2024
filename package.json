@@ -10,7 +10,8 @@
     "build": "tsup src",
     "main:dev": "tsx watch ./src/main",
     "main:prod": "tsup src && node ./dist/main",
-    "test": "vitest run --dir test",
+    "test": "vitest run --dir test/unit",
+    "test:e2e": "vitest run --dir test/integration",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
   },

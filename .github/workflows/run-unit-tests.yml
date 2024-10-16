@@ -1,0 +1,19 @@
+name: Unit Tests CI Clean Code Clean Architecture
+
+on: [push]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+            
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                    node-version: 20
+                    cache: 'npm'
+            - run: npm ci
+            - run: npm run build --if-present
+            - run: npm test
