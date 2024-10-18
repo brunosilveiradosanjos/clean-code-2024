@@ -2,6 +2,7 @@ import Coupon from '@/domain/entity/Coupon'
 import Order from '@/domain/entity/Order'
 import OrderRepository from '@/domain/repository/OrderRepository'
 import Database from '@/infra/database/Database'
+import { env } from '@/infra/env/environment'
 
 export default class OrderRepositoryDatabase implements OrderRepository {
   database: Database
@@ -12,7 +13,7 @@ export default class OrderRepositoryDatabase implements OrderRepository {
 
   async save(order: Order): Promise<void> {
     const orderData = await this.database.one(
-      'insert into ccca.order (coupon_code, code, cpf, issue_date, freight, taxes, serial) values ($1, $2, $3, $4, $5, $6, $7) returning *',
+      `insert into ${env.DATABASE_SCHEMA}.order (coupon_code, code, cpf, issue_date, freight, taxes, serial) values ($1, $2, $3, $4, $5, $6, $7) returning *`,
       [
         order.coupon?.code,
         order.code.value,
@@ -25,7 +26,7 @@ export default class OrderRepositoryDatabase implements OrderRepository {
     )
     for (const orderItem of order.items) {
       await this.database.one(
-        'insert into ccca.order_item (id_order, id_item, price, quantity) values ($1, $2, $3, $4) returning *',
+        `insert into ${env.DATABASE_SCHEMA}.order_item (id_order, id_item, price, quantity) values ($1, $2, $3, $4) returning *`,
         [orderData.id, orderItem.idItem, orderItem.price, orderItem.quantity],
       )
     }
@@ -33,12 +34,12 @@ export default class OrderRepositoryDatabase implements OrderRepository {
 
   async get(code: string): Promise<Order> {
     const orderData = await this.database.one(
-      'select * from ccca.order where code = $1',
+      `select * from ${env.DATABASE_SCHEMA}.order where code = $1`,
       [code],
     )
     if (!orderData) throw new Error('Order not found')
     const orderItemsData = await this.database.many(
-      'select * from ccca.order_item where id_order = $1',
+      `select * from ${env.DATABASE_SCHEMA}.order_item where id_order = $1`,
       [orderData.id],
     )
     const order = new Order(
@@ -56,7 +57,7 @@ export default class OrderRepositoryDatabase implements OrderRepository {
     }
     if (orderData.coupon_code) {
       const couponData = await this.database.one(
-        'select * from ccca.coupon where code = $1',
+        `select * from ${env.DATABASE_SCHEMA}.coupon where code = $1`,
         [orderData.coupon_code],
       )
       const coupon = new Coupon(
@@ -72,14 +73,17 @@ export default class OrderRepositoryDatabase implements OrderRepository {
 
   async count(): Promise<number> {
     const countData = await this.database.one(
-      'select count(*)::int as count from ccca.order',
+      `select count(*)::int as count from ${env.DATABASE_SCHEMA}.order`,
       [],
     )
     return countData.count
   }
 
   async clean(): Promise<void> {
-    await this.database.none('delete from ccca.order_item', [])
-    await this.database.none('delete from ccca.order', [])
+    await this.database.none(
+      `delete from ${env.DATABASE_SCHEMA}.order_item`,
+      [],
+    )
+    await this.database.none(`delete from ${env.DATABASE_SCHEMA}.order`, [])
   }
 }

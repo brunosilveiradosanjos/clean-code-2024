@@ -1,6 +1,7 @@
 import StockEntryRepository from '@/domain/repository/StockEntryRepository'
 import StockEntry from '@/domain/entity/StockEntry'
 import Database from '@/infra/database/Database'
+import { env } from '@/infra/env/environment'
 
 export default class StockEntryRepositoryDatabase
   implements StockEntryRepository
@@ -13,7 +14,7 @@ export default class StockEntryRepositoryDatabase
 
   async getByIdItem(idItem: number): Promise<StockEntry[]> {
     const stockEntriesData = await this.database.many(
-      'select * from ccca.stock_entry where id_item = $1',
+      `select * from ${env.DATABASE_SCHEMA}.stock_entry where id_item = $1`,
       [idItem],
     )
     const stockEntries = []
@@ -32,14 +33,14 @@ export default class StockEntryRepositoryDatabase
 
   async save(stockEntry: StockEntry): Promise<void> {
     await this.database.none(
-      'insert into ccca.stock_entry (id_item, operation, quantity) values ($1, $2, $3)',
+      `insert into ${env.DATABASE_SCHEMA}.stock_entry (id_item, operation, quantity) values ($1, $2, $3)`,
       [stockEntry.idItem, stockEntry.operation, stockEntry.quantity],
     )
   }
 
   async clean(): Promise<void> {
     await this.database.none(
-      "delete from ccca.stock_entry where operation = 'out'",
+      `delete from ${env.DATABASE_SCHEMA}.stock_entry where operation = 'out'`,
       [],
     )
   }

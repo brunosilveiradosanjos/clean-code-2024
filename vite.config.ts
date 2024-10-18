@@ -1,14 +1,11 @@
 import { defineConfig } from 'vitest/config'
-import { resolve } from 'path'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
-  test: {
-    alias: [
-      { find: '@', replacement: resolve(__dirname, './src') },
-      {
-        find: '@/domain',
-        replacement: resolve(__dirname, './src/domain'),
-      },
-    ],
-  },
+  plugins: [tsconfigPaths()],
+  // test: {
+  // globals: true,
+  // root: './',
+  // environmentMatchGlobs: [['test/integration/**', 'test/utils']],
+  // },
 })

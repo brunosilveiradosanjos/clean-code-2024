@@ -4,14 +4,14 @@
   "description": "Clean Code Bootcamp",
   "main": "index.js",
   "engines": {
-    "node": "18"
+    "node": "20"
   },
   "scripts": {
     "build": "tsup src",
     "main:dev": "tsx watch ./src/main",
     "main:prod": "tsup src && node ./dist/main",
     "test": "vitest run --dir test/unit",
-    "test:e2e": "vitest run --dir test/integration",
+    "test:e2e": "DATABASE_SCHEMA=ccca vitest run --dir test/integration",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
   },
@@ -22,21 +22,24 @@
     "@rocketseat/eslint-config": "2.2.2",
     "@types/node": "22.7.4",
     "@types/supertest": "6.0.2",
-    "@vitest/coverage-v8": "2.1.1",
-    "@vitest/ui": "2.1.1",
+    "@vitest/coverage-v8": "1.6.0",
+    "@vitest/ui": "1.6.0",
     "eslint": "8.57.1",
     "supertest": "7.0.0",
     "tsup": "8.3.0",
     "tsx": "4.19.1",
     "typescript": "5.6.2",
-    "vitest": "2.1.1"
+    "vite-tsconfig-paths": "4.3.2",
+    "vitest": "1.6.0"
   },
   "dependencies": {
     "@types/express": "5.0.0",
     "axios": "1.7.7",
+    "dotenv": "16.4.5",
     "express": "4.21.0",
     "fastify": "5.0.0",
     "pg-promise": "11.9.1",
-    "save": "2.9.0"
+    "save": "2.9.0",
+    "zod": "3.23.8"
   }
 }

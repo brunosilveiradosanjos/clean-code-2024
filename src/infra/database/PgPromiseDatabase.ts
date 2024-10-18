@@ -1,5 +1,6 @@
 import pgp from 'pg-promise'
 import Database from '../database/Database'
+import { env } from '@/infra/env/environment'
 
 export default class PgPromiseDatabase implements Database {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,7 +9,7 @@ export default class PgPromiseDatabase implements Database {
   static instance: PgPromiseDatabase
 
   private constructor() {
-    this.pgp = pgp()('postgres://postgres:123456@localhost:5432/app')
+    this.pgp = pgp()(env.DATABASE_URL)
   }
 
   static getInstance() {

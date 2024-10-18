@@ -26,5 +26,6 @@ export default class FastifyHttp implements Http {
 
   async listen(port: number): Promise<void> {
     this.app.listen({ port })
+    console.log('🚀 HTTP Server Running!')
   }
 }

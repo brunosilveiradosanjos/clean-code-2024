@@ -1,6 +1,7 @@
 import Item from '@/domain/entity/Item'
 import ItemRepository from '@/domain/repository/ItemRepository'
 import Database from '@/infra/database/Database'
+import { env } from '@/infra/env/environment'
 
 export default class ItemRepositoryDatabase implements ItemRepository {
   database: Database
@@ -12,7 +13,7 @@ export default class ItemRepositoryDatabase implements ItemRepository {
   async getById(id: number): Promise<Item | undefined> {
     if (id) {
       const itemData = await this.database.one(
-        'select * from ccca.item where id = $1',
+        `select * from ${env.DATABASE_SCHEMA}.item where id = $1`,
         [id],
       )
       return new Item(
@@ -30,7 +31,10 @@ export default class ItemRepositoryDatabase implements ItemRepository {
 
   async getAll(): Promise<Item[]> {
     let items: Item[] = []
-    items = await this.database.many('select * from ccca.item', [])
+    items = await this.database.many(
+      `select * from ${env.DATABASE_SCHEMA}.item`,
+      [],
+    )
     return items
   }
 }

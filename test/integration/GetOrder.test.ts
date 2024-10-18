@@ -32,5 +32,7 @@ describe('Order Integration', () => {
     const getOrder = new GetOrder(repositoryFactory)
     const getOrderOutput = await getOrder.execute(output.code)
     expect(getOrderOutput.total).toBe(930)
+    expect(getOrderOutput.freight).toBe(30)
+    expect(getOrderOutput.code).toBe('202400000001')
   })
 })
