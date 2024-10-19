@@ -5,7 +5,7 @@ const environment = z.object({
   NODE_ENV: z.enum(['prod', 'test', 'dev']).default('dev'),
   DATABASE_URL: z.string(),
   DATABASE_SCHEMA: z.string().default('public'),
-  PORT: z.coerce.number(),
+  PORT: z.coerce.number().default(3000),
 })
 
 const _env = environment.safeParse(process.env)
