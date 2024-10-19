@@ -13,10 +13,8 @@ describe('Order Integration', () => {
 
   beforeEach(async () => {
     repositoryFactory = new DatabaseRepositoryFactory()
-    const orderRepository = repositoryFactory.createOrderRepository()
-    await orderRepository.clean()
-    const stockEntryRepository = repositoryFactory.createStockEntryRepository()
-    await stockEntryRepository.clean()
+    const setupTest = repositoryFactory.createSetupTestRepository()
+    await setupTest.setup()
     zipcodeCalculator = new ZipcodeCalculatorAPIMemory()
   })
 

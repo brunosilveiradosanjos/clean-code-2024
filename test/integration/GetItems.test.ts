@@ -6,8 +6,10 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('Get Items Integration ', () => {
   let repositoryFactory: RepositoryFactory
-  beforeEach(() => {
+  beforeEach(async () => {
     repositoryFactory = new DatabaseRepositoryFactory()
+    const setupTest = repositoryFactory.createSetupTestRepository()
+    await setupTest.setup()
   })
   it('should get all items', async () => {
     const getItems = new GetItems(repositoryFactory)

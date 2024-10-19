@@ -10,6 +10,8 @@ import TaxTableRepository from '@/domain/repository/TaxTableRepository'
 import TaxTableRepositoryDatabase from '@/infra/repository/database/TaxTableRepositoryDatabase'
 import StockEntryRepository from '@/domain/repository/StockEntryRepository'
 import StockEntryRepositoryDatabase from '@/infra/repository/database/StockEntryRepositoryDatabase'
+import SetupTestRepository from '@/domain/repository/SetupTestRepository'
+import SetupTestRepositoryDatabase from '@/infra/repository/database/SetupTestRepositoryDatabase'
 
 export default class DatabaseRepositoryFactory implements RepositoryFactory {
   createItemRepository(): ItemRepository {
@@ -30,5 +32,9 @@ export default class DatabaseRepositoryFactory implements RepositoryFactory {
 
   createStockEntryRepository(): StockEntryRepository {
     return new StockEntryRepositoryDatabase(PgPromiseDatabase.getInstance())
+  }
+
+  createSetupTestRepository(): SetupTestRepository {
+    return new SetupTestRepositoryDatabase(PgPromiseDatabase.getInstance())
   }
 }

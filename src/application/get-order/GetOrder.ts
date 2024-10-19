@@ -27,7 +27,6 @@ export default class GetOrder {
         quantity: orderItem.quantity,
       }
       orderItems.push(orderItemOutput)
-      // console.log('GetOrder orderItems', orderItems)
     }
     return new GetOrderOutput({
       code: order.code.value,

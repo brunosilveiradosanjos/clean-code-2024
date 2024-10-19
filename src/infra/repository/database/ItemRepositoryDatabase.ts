@@ -35,6 +35,7 @@ export default class ItemRepositoryDatabase implements ItemRepository {
       `select * from ${env.DATABASE_SCHEMA}.item`,
       [],
     )
+    if (items.length === 0) throw new Error('Item not found')
     return items
   }
 }

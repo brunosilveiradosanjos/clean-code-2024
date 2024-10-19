@@ -1,5 +1,5 @@
-import RepositoryFactory from '../../domain/factory/RepositoryFactory'
-import ItemRepository from '../../domain/repository/ItemRepository'
+import RepositoryFactory from '@/domain/factory/RepositoryFactory'
+import ItemRepository from '@/domain/repository/ItemRepository'
 import GetItemOutput from './GetItemOutput'
 
 export default class GetItems {
